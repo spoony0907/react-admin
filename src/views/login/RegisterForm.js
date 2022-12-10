@@ -5,10 +5,19 @@ import {UserOutlined, LockOutlined} from '@ant-design/icons';
 // css
 import './index.scss'
 
-class RegistryForm extends Component {
+class RegisterForm extends Component {
     constructor() {
         super();
         this.state = {};
+    }
+
+    onFinish = (values) => {
+        console.log("Received values of form: ", values);
+    }
+
+    toggleForm = () => {
+        // 调父级的方法
+        this.props.switchForm("login");
     }
 
     render() {
@@ -16,7 +25,7 @@ class RegistryForm extends Component {
             <>
                 <div className="form-header">
                     <h4 className="column">注册</h4>
-                    <span>账号登录</span>
+                    <span onClick={this.toggleForm}>账号登录</span>
                 </div>
                 <div className="form-content">
                     <Form name="normal_login" className="login-form" initialValues={{ remember: true }}
@@ -28,7 +37,10 @@ class RegistryForm extends Component {
                         <Form.Item name="password" rules={[{ required: true, message: "Please input your Password!" }]}>
                             <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
                         </Form.Item>
-                        <Form.Item name="password" rules={[{ required: true, message: "Please input your Password!" }]}>
+                        <Form.Item name="passwords" rules={[{ required: true, message: "Please input your Password!" }]}>
+                            <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
+                        </Form.Item>
+                        <Form.Item name="code" rules={[{ required: true, message: "Please input your Code!" }]}>
                             <Row gutter={13}>
                                 <Col span={15}>
                                     <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
@@ -40,7 +52,7 @@ class RegistryForm extends Component {
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="login-form-button" block>
-                                登录
+                                注册
                             </Button>
                         </Form.Item>
                     </Form>
@@ -50,4 +62,4 @@ class RegistryForm extends Component {
     }
 }
 
-export default RegistryForm;
+export default RegisterForm;
