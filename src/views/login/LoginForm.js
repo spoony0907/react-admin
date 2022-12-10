@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 
-class News extends Component {
+class Login extends Component {
     constructor() {
         super();
         this.state = {};
     }
 
     render() {
-        return <div>News</div>;
+        return (
+            <div>LoginForm</div>
+        );
     }
 }
 
-export default News;
+export default Login;
