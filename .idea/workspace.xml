@@ -2,15 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac1488be-8c8e-4cfd-a3e7-adcef5ccac1c" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/About.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/News.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/main.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/normalize.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/sassConfig.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/aaa.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/webpack.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +25,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="SCSS File" />
       </list>
     </option>
   </component>
@@ -49,7 +54,8 @@
     "WebServerToolWindowFactoryState": "false",
     "javascript.nodejs.core.library.configured.version": "16.18.0",
     "javascript.nodejs.core.library.typings.version": "16.18.0",
-    "last_opened_file_path": "E:/code/react/react-admin/src/views",
+    "last_opened_file_path": "E:/code/react/react-admin/src/styles",
+    "list.type.of.created.stylesheet": "SCSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,10 +64,15 @@
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "ts.external.directory.path": "D:\\WebStorm 2021.3.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\code\react\react-admin\src\styles" />
       <recent name="E:\code\react\react-admin\src\views" />
     </key>
   </component>
