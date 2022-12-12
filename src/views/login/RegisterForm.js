@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 // antd
 import {Form, Input, Button, Row, Col} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-// css
-import './index.scss'
 
 class RegisterForm extends Component {
     constructor() {

@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
 // antd
-import {Form, Input, Button, Row, Col} from 'antd';
+import {Form, Input, Button, Row, Col, message} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-// css
-import './index.scss'
 // 验证
 import {validate_password} from '../../utils/validate';
 // API
-import {Login} from '../../api/account';
+import {Login, GetCode} from '../../api/account';
 
 class LoginForm extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            username: "",
+            code_button_loading: false,
+            code_button_text: "获取验证码"
+        };
     }
 
+    // 登录
     onFinish = (values) => {
         Login().then(response => {
             console.log(response);
@@ -24,12 +27,45 @@ class LoginForm extends Component {
         console.log("Received values of form: ", values);
     }
 
+    // 获取验证码
+    getCode = () => {
+        if (!this.state.username) {
+            message.warning("用户名不能为空", 2);
+            return;
+        }
+        this.setState({
+            code_button_loading: true,
+            code_button_text: "发送中"
+        });
+        const requestData = {
+            username: this.state.username,
+            module: "login"
+        }
+        GetCode(requestData).then(response => {
+        }).catch(error => {
+            this.setState({
+                code_button_loading: false,
+                code_button_text: "重新获取"
+            });
+        })
+    }
+
+    // input输入处理
+    inputChange = (e) => {
+        let value = e.target.value;
+        this.setState({
+            username: value
+        })
+    }
+
     toggleForm = () => {
         // 调父级的方法
         this.props.switchForm("register");
     }
 
     render() {
+        const {username, code_button_loading, code_button_text} = this.state;
+        // const _this = this;
         return (
             <>
                 <div className="form-header">
@@ -43,8 +79,19 @@ class LoginForm extends Component {
                         <Form.Item name="username" rules={[
                                 { required: true, message: "邮箱不能为空" },
                                 { type: "email", message: "邮箱格式不正确" }
+                                // ({getFieldValue}) => ({
+                                //     validator(rule, value) {
+                                //         if (validate_email(value)) {
+                                //             _this.setState({
+                                //                 code_button_disabled: false
+                                //             })
+                                //             return Promise.resolve();
+                                //         }
+                                //         return Promise.reject("邮箱格式不正确");
+                                //     }
+                                // })
                         ]}>
-                            <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="email" />
+                            <Input value={username} onChange={this.inputChange} prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="email" />
                         </Form.Item>
                         <Form.Item name="password" rules={[
                             { required: true, message: "密码不能为空" },
@@ -71,7 +118,7 @@ class LoginForm extends Component {
                                     <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
                                 </Col>
                                 <Col span={9}>
-                                    <Button type="danger" block>获取验证码</Button>
+                                    <Button type="danger" loading={code_button_loading} block  onClick={this.getCode}>{code_button_text}</Button>
                                 </Col>
                             </Row>
                         </Form.Item>
