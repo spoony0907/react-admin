@@ -2,11 +2,15 @@ import React, {Component} from 'react';
 // antd
 import {Form, Input, Button, Row, Col} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
+// 组件
+import Code from '../../components/code/index';
 
 class RegisterForm extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            username: ""
+        };
     }
 
     onFinish = (values) => {
@@ -19,6 +23,7 @@ class RegisterForm extends Component {
     }
 
     render() {
+        const {username} = this.state;
         return (
             <>
                 <div className="form-header">
@@ -44,7 +49,7 @@ class RegisterForm extends Component {
                                     <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
                                 </Col>
                                 <Col span={9}>
-                                    <Button type="danger" block>获取验证码</Button>
+                                    <Code username={username} />
                                 </Col>
                             </Row>
                         </Form.Item>

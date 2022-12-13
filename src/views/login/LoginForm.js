@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 // antd
-import {Form, Input, Button, Row, Col, message} from 'antd';
+import {Form, Input, Button, Row, Col} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 // 验证
 import {validate_password} from '../../utils/validate';
 // API
-import {Login, GetCode} from '../../api/account';
+import {Login} from '../../api/account';
+// 组件
+import Code from '../../components/code/index';
 
 class LoginForm extends Component {
     constructor() {
@@ -28,65 +30,12 @@ class LoginForm extends Component {
         console.log("Received values of form: ", values);
     }
 
-    // 获取验证码
-    getCode = () => {
-        if (!this.state.username) {
-            message.warning("用户名不能为空", 2);
-            return;
-        }
-        this.setState({
-            code_button_loading: true,
-            code_button_text: "发送中"
-        });
-        const requestData = {
-            username: this.state.username,
-            module: "login"
-        }
-        GetCode(requestData).then(response => {
-            // 执行倒计时
-            this.countDown();
-        }).catch(error => {
-            this.setState({
-                code_button_loading: false,
-                code_button_text: "重新获取"
-            });
-        })
-    }
-
     /** input输入处理 */
     inputChange = (e) => {
         let value = e.target.value;
         this.setState({
             username: value
         })
-    }
-    /** 倒计时 */
-    countDown = () => {
-        // 定时器
-        let timer = null;
-        // 倒计时时间
-        let sec = 60;
-        // 修改状态
-        this.setState({
-            code_button_loading: false,
-            code_button_disabled: true,
-            code_button_text: `${sec}s`
-        });
-
-        timer = setInterval(() => {
-            sec--;
-            if (sec <= 0) {
-                this.setState({
-                    code_button_text: `重新获取`,
-                    code_button_disabled: false
-                });
-                clearInterval(timer);
-                return;
-            }
-            this.setState({
-                code_button_text: `${sec}s`
-            });
-        }, 1000);
     }
 
     toggleForm = () => {
@@ -95,7 +44,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {username, code_button_loading, code_button_text, code_button_disabled} = this.state;
+        const {username} = this.state;
         // const _this = this;
         return (
             <>
@@ -149,7 +98,7 @@ class LoginForm extends Component {
                                     <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
                                 </Col>
                                 <Col span={9}>
-                                    <Button type="danger" disabled={code_button_disabled} loading={code_button_loading} block  onClick={this.getCode}>{code_button_text}</Button>
+                                    <Code username={username} />
                                 </Col>
                             </Row>
                         </Form.Item>
