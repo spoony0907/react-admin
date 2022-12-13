@@ -13,6 +13,7 @@ class LoginForm extends Component {
         this.state = {
             username: "",
             code_button_loading: false,
+            code_button_disabled: false,
             code_button_text: "获取验证码"
         };
     }
@@ -42,6 +43,8 @@ class LoginForm extends Component {
             module: "login"
         }
         GetCode(requestData).then(response => {
+            // 执行倒计时
+            this.countDown();
         }).catch(error => {
             this.setState({
                 code_button_loading: false,
@@ -50,12 +53,40 @@ class LoginForm extends Component {
         })
     }
 
-    // input输入处理
+    /** input输入处理 */
     inputChange = (e) => {
         let value = e.target.value;
         this.setState({
             username: value
         })
+    }
+    /** 倒计时 */
+    countDown = () => {
+        // 定时器
+        let timer = null;
+        // 倒计时时间
+        let sec = 60;
+        // 修改状态
+        this.setState({
+            code_button_loading: false,
+            code_button_disabled: true,
+            code_button_text: `${sec}s`
+        });
+
+        timer = setInterval(() => {
+            sec--;
+            if (sec <= 0) {
+                this.setState({
+                    code_button_text: `重新获取`,
+                    code_button_disabled: false
+                });
+                clearInterval(timer);
+                return;
+            }
+            this.setState({
+                code_button_text: `${sec}s`
+            });
+        }, 1000);
     }
 
     toggleForm = () => {
@@ -64,7 +95,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {username, code_button_loading, code_button_text} = this.state;
+        const {username, code_button_loading, code_button_text, code_button_disabled} = this.state;
         // const _this = this;
         return (
             <>
@@ -118,7 +149,7 @@ class LoginForm extends Component {
                                     <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
                                 </Col>
                                 <Col span={9}>
-                                    <Button type="danger" loading={code_button_loading} block  onClick={this.getCode}>{code_button_text}</Button>
+                                    <Button type="danger" disabled={code_button_disabled} loading={code_button_loading} block  onClick={this.getCode}>{code_button_text}</Button>
                                 </Col>
                             </Row>
                         </Form.Item>
