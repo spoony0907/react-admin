@@ -14,9 +14,7 @@ class LoginForm extends Component {
         super();
         this.state = {
             username: "",
-            code_button_loading: false,
-            code_button_disabled: false,
-            code_button_text: "获取验证码"
+            module: "login"
         };
     }
 
@@ -44,7 +42,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {username} = this.state;
+        const {username, module} = this.state;
         // const _this = this;
         return (
             <>
@@ -87,7 +85,7 @@ class LoginForm extends Component {
                             // { max: 20, message: "不能大于20位" }
                             { pattern: validate_password, message: "请输入6-20位数字+字母" }
                         ]}>
-                            <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
+                            <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
                         </Form.Item>
                         <Form.Item name="code" rules={[
                             { required: true, message: "验证码不能为空" },
@@ -98,7 +96,7 @@ class LoginForm extends Component {
                                     <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
                                 </Col>
                                 <Col span={9}>
-                                    <Code username={username} />
+                                    <Code username={username} module={module} />
                                 </Col>
                             </Row>
                         </Form.Item>
