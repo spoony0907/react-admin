@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 // antd
-import {Form, Input, Button, Row, Col} from 'antd';
+import {Form, Input, Button, Row, Col, message} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-// 组件
-import Code from '../../components/code/index';
-// API
-import {Register} from '../../api/account';
 // 验证
 import {validate_pass} from '../../utils/validate';
+// API
+import {Register} from '../../api/account';
+// 组件
+import Code from '../../components/code/index';
+// 加密
+import CryptoJs from 'crypto-js';
 
 class RegisterForm extends Component {
     constructor() {
@@ -43,11 +45,15 @@ class RegisterForm extends Component {
     onFinish = (values) => {
         const responseData = {
             username: this.state.username,
-            password: this.state.password,
+            password: CryptoJs.MD5(this.state.password).toString(),
             code: this.state.code
         }
-        Register().then(response => {
-
+        Register(responseData).then(response => {
+            const data = response.data;
+            message.success(data.message);
+            if (data.resCode === 0) {
+                this.toggleForm();
+            }
         }).catch(error => {
 
         })

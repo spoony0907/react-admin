@@ -8,22 +8,40 @@ import {validate_password} from '../../utils/validate';
 import {Login} from '../../api/account';
 // 组件
 import Code from '../../components/code/index';
+// 加密
+import CryptoJs from 'crypto-js';
 
 class LoginForm extends Component {
     constructor() {
         super();
         this.state = {
             username: "",
-            module: "login"
+            password: "",
+            code: "",
+            module: "login",
+            loading: false
         };
     }
 
     // 登录
     onFinish = (values) => {
-        Login().then(response => {
+        const requestData = {
+            username: this.state.username,
+            password: CryptoJs.MD5(this.state.password).toString(),
+            code: this.state.code
+        }
+        this.setState({
+            loading: true
+        })
+        Login(requestData).then(response => {
             console.log(response);
+            this.setState({
+                loading: false
+            })
         }).catch(error => {
-
+            this.setState({
+                loading: false
+            })
         })
         console.log("Received values of form: ", values);
     }
@@ -35,6 +53,18 @@ class LoginForm extends Component {
             username: value
         })
     }
+    inputChangePassword = (e) => {
+        let value = e.target.value;
+        this.setState({
+            password: value
+        })
+    }
+    inputChangeCode = (e) => {
+        let value = e.target.value;
+        this.setState({
+            code: value
+        })
+    }
 
     toggleForm = () => {
         // 调父级的方法
@@ -42,7 +72,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {username, module} = this.state;
+        const {username, module, loading} = this.state;
         // const _this = this;
         return (
             <>
@@ -85,7 +115,7 @@ class LoginForm extends Component {
                             // { max: 20, message: "不能大于20位" }
                             { pattern: validate_password, message: "请输入6-20位数字+字母" }
                         ]}>
-                            <Input type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
+                            <Input onChange={this.inputChangePassword} type="password" prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
                         </Form.Item>
                         <Form.Item name="code" rules={[
                             { required: true, message: "验证码不能为空" },
@@ -93,7 +123,7 @@ class LoginForm extends Component {
                         ]}>
                             <Row gutter={13}>
                                 <Col span={15}>
-                                    <Input prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
+                                    <Input onChange={this.inputChangeCode} prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="Code" />
                                 </Col>
                                 <Col span={9}>
                                     <Code username={username} module={module} />
@@ -101,7 +131,7 @@ class LoginForm extends Component {
                             </Row>
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button" block>
+                            <Button type="primary" loading={loading} htmlType="submit" className="login-form-button" block>
                                 登录
                             </Button>
                         </Form.Item>
